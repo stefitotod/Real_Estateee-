@@ -242,12 +242,9 @@ BEGIN
      END IF;
 
      IF num_deals > 0 THEN
-        -- Call the SendEMailToCustomer procedure
+
         CALL SendEMailToCustomer(customerID, NEW.property_id, discount, @message);
-        -- Set the message returned by the procedure
-        SELECT @message INTO message;
-        -- Insert message into the ads_log table
-        INSERT INTO ads_log (log_message) VALUES (message);
+       
      END IF;
      
 END //
