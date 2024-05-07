@@ -203,7 +203,7 @@ BEGIN
         AND MONTH(monthlyPayment) = month_input
         AND YEAR(yearOfPayment) = year_input;
 	END LOOP;
-    CLOSE cursorDeals;
+    CLOSE dealsCursor;
     
     SET avr_commission = total_commission / count_sells;
     
