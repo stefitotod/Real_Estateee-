@@ -244,10 +244,8 @@ BEGIN
      IF num_deals > 0 THEN
 
         CALL SendEMailToCustomer(customerID, NEW.property_id, discount, @message);
-   	SET @message INTO message;
-       
-     END IF;
-     
+   	SET message = @message;       
+     END IF;    
 END //
 DELIMITER ;
 
