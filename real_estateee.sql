@@ -244,6 +244,7 @@ BEGIN
      IF num_deals > 0 THEN
 
         CALL SendEMailToCustomer(customerID, NEW.property_id, discount, @message);
+   	SET @message INTO message;
        
      END IF;
      
@@ -256,18 +257,23 @@ BEFORE INSERT ON ads
 FOR EACH ROW
 BEGIN
     DECLARE num_rental_ads INT;
-    
+    DECLARE customerID INT;
+
+    SELECT customer_id INTO customerID 
+    FROM properties 
+    WHERE id = NEW.property_id;
+
     SELECT COUNT(*) INTO num_rental_ads
     FROM ads a
     JOIN properties p ON a.property_id = p.id
     JOIN actions act ON a.action_id = act.id
     WHERE act.actionType = 'RENT'
     AND a.is_actual = 1
-    AND p.customer_id = NEW.property_id;
+    AND p.customer_id = customerID;
 
     IF num_rental_ads >= 2 and NEW.action_id = 3 THEN 
         SIGNAL SQLSTATE '45000'
-        SET MESSAGE_TEXT = 'Собственикът има вече 2 активни обяви за отдаване под наем.';
+        SET MESSAGE_TEXT = 'Sorry';
     END IF;
 END //
 DELIMITER ;
