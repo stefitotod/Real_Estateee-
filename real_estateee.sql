@@ -258,6 +258,7 @@ FOR EACH ROW
 BEGIN
     DECLARE num_rental_ads INT;
     DECLARE customerID INT;
+    DECLARE message_text VARCHAR(255);
 
     SELECT customer_id INTO customerID 
     FROM properties 
